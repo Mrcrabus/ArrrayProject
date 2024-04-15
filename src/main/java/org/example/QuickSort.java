@@ -4,7 +4,7 @@ public class QuickSort<T extends Comparable<T>> {
     /**
      * Sorts the list using a quicksort algorithm.
      *
-     * @param list list
+     * @param list target list which will be sort.
      */
     public OtherArrayList<T> sort(OtherArrayList<T> list) {
         if (list.size() <= 1) {
