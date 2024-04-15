@@ -14,13 +14,13 @@ public class MyArrayList<T> implements OtherArrayList<T> {
 
     public MyArrayList(int size) {
         list = (T[]) new Object[size];
-        this.size = size;
+        this.size = 0;
     }
 
     public MyArrayList(Collection<T> c) {
         list = (T[]) new Object[c.size()];
         int i = 0;
-        for(T item: c) {
+        for (T item : c) {
             list[i++] = item;
         }
 
@@ -30,6 +30,9 @@ public class MyArrayList<T> implements OtherArrayList<T> {
     @Override
     public boolean add(T element) {
         size++;
+        if (size >= list.length) {
+            resizeArray();
+        }
         for (int i = 0; i < size; i++) {
             if (list[i] == null) {
                 list[i] = element;
@@ -48,29 +51,20 @@ public class MyArrayList<T> implements OtherArrayList<T> {
             throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + size);
         }
 
-        if (index == size) {
-            add(item);
-            return true;
+        if (size >= list.length) {
+            resizeArray();
         }
+
+        for (int i = size - 1; i >= index; i--) {
+            list[i + 1] = list[i];
+        }
+
+        list[index] = item;
         size++;
-
-        var temp = Arrays.copyOf(list, size);
-
-        for (int i = size - 1; i >= 0; i--) {
-            if (list[i] == null) {
-                continue;
-            }
-            temp[i + 1] = list[i];
-            if (i == index) {
-                temp[i] = item;
-                break;
-            }
-        }
-        list = temp;
-        removeNulls();
 
         return true;
     }
+
 
 
     @Override
@@ -81,9 +75,6 @@ public class MyArrayList<T> implements OtherArrayList<T> {
         return list[index];
     }
 
-    /**
-     * @param index
-     */
     @Override
     public T remove(int index) {
         if (index > size || index < 0) {
@@ -125,15 +116,17 @@ public class MyArrayList<T> implements OtherArrayList<T> {
 
     @Override
     public void sort(Comparator<T> comparator) {
-        Arrays.sort(list, comparator);
+        for (int i = 0; i < size; i++) {
+            for (int j = i + 1; j < size; j++) {
+                int result = comparator.compare(list[j], list[j - 1]);
+                if (result < 0) {
+                    T temp = list[j];
+                    list[j] = list[j - 1];
+                    list[j - 1] = temp;
+                }
+            }
+        }
     }
-
-
-    @Override
-    public void sort() {
-        Arrays.sort(list, 0, size);
-    }
-
 
 
     @Override
@@ -220,6 +213,9 @@ public class MyArrayList<T> implements OtherArrayList<T> {
         }
     }
 
-
+    private void resizeArray() {
+        int newSize = list.length * 2;
+        list = Arrays.copyOf(list, newSize);
+    }
 
 }

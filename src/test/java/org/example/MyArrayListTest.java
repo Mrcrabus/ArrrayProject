@@ -2,6 +2,7 @@ package org.example;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -58,11 +59,31 @@ class MyArrayListTest {
     }
 
     @Test
-    public void testSort() {
+    public void testSortIntegers() {
         MyArrayList<Integer> list = new MyArrayList<>(Arrays.asList(3, 1, 2));
         list.sort(Collections.<Integer>reverseOrder());
 
         assertEquals(Arrays.asList(3, 2, 1), list.toList());
+
+    }
+
+    @Test
+    public void testSortStrings() {
+        MyArrayList<String> list1 = new MyArrayList<>(Arrays.asList("l", "A", "W", "1", "Lol", "Hello World"));
+        List<String> list2 = new ArrayList<>(Arrays.asList("l", "A", "W", "1", "Lol", "Hello World"));
+        list2.sort(Collections.<String>reverseOrder());
+        list1.sort(Collections.<String>reverseOrder());
+
+        assertEquals(list2, list1.toList());
+    }
+    @Test
+    public void testSortChars() {
+        MyArrayList<Character> list1 = new MyArrayList<>(Arrays.asList('b', 'a', 'c', 'z', 'e', 'f'));
+        List<Character> list2 = new ArrayList<>(Arrays.asList('b', 'a', 'c', 'z', 'e', 'f'));
+        list2.sort(Collections.<Character>reverseOrder());
+        list1.sort(Collections.<Character>reverseOrder());
+
+        assertEquals(list2, list1.toList());
     }
 
     @Test

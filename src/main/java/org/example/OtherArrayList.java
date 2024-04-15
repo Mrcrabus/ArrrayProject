@@ -56,11 +56,6 @@ public interface OtherArrayList<T> {
     void sort(Comparator<T> comparator);
 
     /**
-     * Sorts the list into ascending order.
-     */
-    void sort();
-
-    /**
      * Sorts the list using a quicksort algorithm.
      */
     void quickSort();

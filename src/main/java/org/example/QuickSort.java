@@ -1,36 +1,37 @@
 package org.example;
 
 public class QuickSort<T extends Comparable<T>> {
-
-    public OtherArrayList<T> quickSort(OtherArrayList<T> list) {
-        if (list.size() == 0){
+    /**
+     * Sorts the list using a quicksort algorithm.
+     *
+     * @param list list
+     */
+    public OtherArrayList<T> sort(OtherArrayList<T> list) {
+        if (list.size() <= 1) {
             return list;
         }
-        OtherArrayList<T> sorted;  // this shall be the sorted list to return, no needd to initialise
-        OtherArrayList<T> smaller = new MyArrayList<>() {
-        }; // Vehicles smaller than pivot
-        OtherArrayList<T> greater = new MyArrayList<>(); // Vehicles greater than pivot
-        T pivot = list.get(0);  // first Vehicle in list, used as pivot
 
-        T j;     // Variable used for Vehicles in the loop
+        T pivot = list.get(0);
+        OtherArrayList<T> smaller = new MyArrayList<>();
+        OtherArrayList<T> greater = new MyArrayList<>();
+
         for (int i = 1; i < list.size(); i++) {
-            j = list.get(i);
-            if (j.compareTo(pivot) < 0)   // make sure Vehicle has proper compareTo method
-                smaller.add(j);
+            T element = list.get(i);
+            if (element.compareTo(pivot) < 0)
+                smaller.add(element);
             else
-                greater.add(j);
+                greater.add(element);
         }
-        smaller = quickSort(smaller);  // capitalise 's'
-        greater = quickSort(greater);  // sort both halfs recursively
-        smaller.add(pivot);          // add initial pivot to the end of the (now sorted) smaller Vehicles
 
+        smaller = sort(smaller);
+        greater = sort(greater);
+
+        smaller.add(pivot);
         for (int i = 0; i < greater.size(); i++) {
             smaller.add(greater.get(i));
         }
-//        smaller.addAll(greater);     // add the (now sorted) greater Vehicles to the smaller ones (now smaller is essentially your sorted list)
-        sorted = smaller;            // assign it to sorted; one could just as well do: return smaller
 
-        return sorted;
+        return smaller;
     }
 
 }
