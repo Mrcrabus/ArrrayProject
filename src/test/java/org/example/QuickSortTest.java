@@ -16,7 +16,7 @@ public class QuickSortTest {
         input.add("S");
         input.add("12de");
         input.add("ABC");
-        OtherArrayList<String> expected = new MyArrayList<>(Arrays.asList(new String[]{ "12de", "ABC", "S"}));
+        OtherArrayList<String> expected = new MyArrayList<>(Arrays.asList("12de", "ABC", "S"));
 
         OtherArrayList<String> result = sorter.sort(input);
         assertEquals(expected.toString(), result.toString());
